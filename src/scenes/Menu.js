@@ -23,7 +23,7 @@ class Menu extends Phaser.Scene {
             'Rocket Runner', menuConfig).setOrigin(0.5)
         menuConfig.color = '#4F595E';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding,
-            'Press left or right arrow to start', menuConfig).setOrigin(0.5)
+            'Press Enter to start', menuConfig).setOrigin(0.5)
 
     //     Define Keys LEFT and RIGHT
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -35,6 +35,7 @@ class Menu extends Phaser.Scene {
     update() {
 
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.sound.play('background-music')
             this.scene.start('playScene')
         }
     }
