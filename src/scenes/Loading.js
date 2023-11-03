@@ -18,10 +18,11 @@ class Loading extends Phaser.Scene {
             loadingBar.destroy();
         });
 
-        this.load.path = './assets/';
+        // this.load.path = './assets/';
     }
 
     create() {
         this.scene.start('menuScene');
     }
+
 }

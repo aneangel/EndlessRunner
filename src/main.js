@@ -6,9 +6,9 @@ Creative Tilt:
 
 let config = {
     type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
-    scene: [ Loading, Menu ]
+    width: 1280,
+    height: 960,
+    scene: [ Loading, Menu, Play, GameOver ]
 }
 
 let game = new Phaser.Game(config);

@@ -3,13 +3,6 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
 
-    preload() {
-        // background soundtrack found from: https://www.fesliyanstudios.com/royalty-free-music
-        // /downloads-c/8-bit-music/6
-        this.load.audio('background-music', './assets/sounds/background.mp3');
-    //     End bracket for Preload function
-    }
-
     create() {
         let menuConfig = {
             parent: 'game-screen',
@@ -27,8 +20,10 @@ class Menu extends Phaser.Scene {
 
     //     Menu Text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding,
-            'Endless Runner', menuConfig).setOrigin(0.5)
+            'Rocket Runner', menuConfig).setOrigin(0.5)
         menuConfig.color = '#4F595E';
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding,
+            'Press left or right arrow to start', menuConfig).setOrigin(0.5)
 
     //     Define Keys LEFT and RIGHT
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -39,6 +34,9 @@ class Menu extends Phaser.Scene {
 
     update() {
 
+        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start('playScene')
+        }
     }
 
 //     End Bracket for Class Menu
