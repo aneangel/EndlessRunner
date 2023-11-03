@@ -1,5 +1,5 @@
 /* Anthony Angeles
-Game title: Campaign Run
+Game title: Rocket Runner
 Approx. Hours:
 Creative Tilt:
  */
@@ -8,7 +8,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 640,
     height: 480,
-    scene: [ Menu]
+    scene: [ Loading, Menu ]
 }
 
 let game = new Phaser.Game(config);
