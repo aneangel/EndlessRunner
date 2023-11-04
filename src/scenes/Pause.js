@@ -11,8 +11,14 @@ class Pause extends Phaser.Scene {
         overlay.setOrigin(0, 0);
 
         // Add pause message or options
-        const pauseText = this.add.text(game.config.width / 2, game.config.height / 2, 'PAUSED', { fontSize: '48px', fill: '#fff' });
+        const pauseText = this.add.text(game.config.width / 2, game.config.height / 2,
+            'PAUSED', { fontSize: '48px', fill: '#fff' });
         pauseText.setOrigin(0.5);
+
+        // Add the "Press 'R' to restart" text below the "PAUSED" message
+        const restartText = this.add.text(game.config.width / 2, game.config.height / 2 + 60,
+            "Press 'R' to restart the game back to menu", { fontSize: '24px', fill: '#fff' });
+        restartText.setOrigin(0.5);
 
         //     Creating key "P" for pausing the game at anytime
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
