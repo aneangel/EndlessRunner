@@ -16,6 +16,7 @@ class Pause extends Phaser.Scene {
 
         //     Creating key "P" for pausing the game at anytime
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
 
     update() {
@@ -24,6 +25,15 @@ class Pause extends Phaser.Scene {
             console.log("Resume/Pause key pressed");
             this.scene.resume("playScene");
             this.scene.stop("pauseScene");
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.restartKey)) {
+            console.log("Restart key pressed");
+
+            this.sound.stopAll();
+
+            this.scene.stop("playScene");
+            this.scene.start("menuScene");
         }
     }
 
