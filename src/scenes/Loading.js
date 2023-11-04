@@ -40,6 +40,17 @@ class Loading extends Phaser.Scene {
         // Static images for game
         this.load.image('background', 'background/spaceBackground.png')
 
+        // Static images for sprites
+        this.load.image('asteroids', 'asteroid.png')
+        this.load.image('alien1', 'opp.png')
+        this.load.image('rocketMan', 'rocketMan.png')
+
+        // Static images for particle sprites
+        this.load.image('particle1', 'particles/particle.png')
+        this.load.image('particle2', 'particles/particle1.png')
+        this.load.image('particle3', 'particles/particle2.png')
+        this.load.image('particle4', 'particles/particle3.png')
+
         // Audio needed for game
         this.load.audio('background-music', 'sounds/background.mp3')
 
