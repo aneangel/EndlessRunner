@@ -8,7 +8,10 @@ let config = {
     type: Phaser.CANVAS,
     width: 1280,
     height: 960,
-    scene: [ Loading, Menu, Play, GameOver ]
+    scale: {
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+    scene: [ Loading, Menu, Play, GameOver, Pause ]
 }
 
 let game = new Phaser.Game(config);
