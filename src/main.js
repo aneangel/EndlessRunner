@@ -21,7 +21,7 @@ let config = {
             }
         }
     },
-    scene: [ Loading, Menu, Play, GameOver, Pause ]
+    scene: [ Loading, Menu, Play, GameOver, Credits, Pause ]
 }
 
 let game = new Phaser.Game(config);
@@ -34,6 +34,10 @@ let centerY = game.config.height/2;
 let w = game.config.width;
 let h = game.config.height;
 
-
 let cursors;
+
+let level;
+let highScore;
+let newHighScore = false;
+
 let keyF, keyR, keyLEFT, keyRIGHT;

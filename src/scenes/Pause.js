@@ -20,9 +20,17 @@ class Pause extends Phaser.Scene {
             "Press 'R' to restart the game back to menu", { fontSize: '24px', fill: '#fff' });
         restartText.setOrigin(0.5);
 
+        // Add the "Press 'R' to restart" text below the "PAUSED" message
+        const endText = this.add.text(game.config.width / 2, game.config.height / 2 + 90,
+            "Press 'ESC' to end the game", { fontSize: '24px', fill: '#fff' });
+        endText.setOrigin(0.5);
+
         //     Creating key "P" for pausing the game at anytime
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+    //     End game key
+        this.endKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     }
 
     update() {
@@ -40,6 +48,15 @@ class Pause extends Phaser.Scene {
 
             this.scene.stop("playScene");
             this.scene.start("menuScene");
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.endKey)) {
+            console.log("End key pressed");
+
+            this.sound.stopAll();
+
+            this.scene.stop("playScene");
+            this.scene.start("GameOverScene");
         }
     }
 
