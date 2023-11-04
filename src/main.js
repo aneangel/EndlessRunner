@@ -11,6 +11,16 @@ let config = {
     scale: {
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            //debug: true,
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
+    },
     scene: [ Loading, Menu, Play, GameOver, Pause ]
 }
 

@@ -4,12 +4,19 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-
+        // Background for game
         this.starfield = this.add.tileSprite(0, 0, 1280, 960, 'background').setOrigin(0, 0);
 
     //     Creating key "P" for pausing the game at anytime
         this.pasueKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+
+        this.rocketMan = this.physics.add.sprite(32, centerY, 'rocketMan').setOrigin(0.5);
+        this.rocketMan.setCollideWorldBounds(true);
+
+        this.rocketMan.setScale(2.5);
+
+
     }
 
     update() {
