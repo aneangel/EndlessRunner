@@ -51,12 +51,17 @@ class Loading extends Phaser.Scene {
         this.load.image('particle3', 'particles/particle2.png')
         this.load.image('particle4', 'particles/particle3.png')
 
+        // Static images for laser
+        this.load.image('laser', 'laser/laser.png')
+
         // Audio needed for game
         this.load.audio('background-music', 'sounds/background.mp3')
+        // this.load.audio('tvon', 'sounds/turnon.mp3')
 
     }
 
     create() {
+        // this.sound.play('tvon')
         this.scene.start('menuScene');
     }
 

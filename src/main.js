@@ -38,6 +38,8 @@ let cursors;
 
 let level;
 let highScore;
+const rocketManWidth = 16;
+const rocketManHeight = 128;
 let newHighScore = false;
 
 let keyF, keyR, keyLEFT, keyRIGHT;
