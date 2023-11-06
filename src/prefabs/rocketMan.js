@@ -1,5 +1,5 @@
 class RocketMan extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, key) {
+    constructor(scene, x, y, key, laserGroup) {
         super(scene, x, y, key);
         scene.add.existing(this);
         scene.physics.world.enable(this);
@@ -12,35 +12,25 @@ class RocketMan extends Phaser.Physics.Arcade.Sprite {
         // Define custom properties for RocketMan, e.g., speed
         this.speed = 200;
 
+        // Laser Group
+        this.laserGroup = laserGroup;
+
+
     }
 
-    // update() {
-    //     const velocityIncrement = 5
-    //
-    //     // Handle user input for movement
-    //     if (this.cursors.up.isDown) {
-    //         console.log("up key");
-    //         this.body.velocity.y -= this.speed;
-    //     } else if (this.cursors.down.isDown) {
-    //         console.log("down key");
-    //         this.body.velocity.y += this.speed;
-    //     }
-    //
-    //     // Ensure RocketMan stays within the world bounds
-    //     const minY = 0;  // Minimum Y coordinate
-    //     const maxY = this.scene.sys.game.config.height;  // Maximum Y coordinate
-    //
-    //     if (this.y < minY) {
-    //         this.y = minY;
-    //     } else if (this.y > maxY) {
-    //         this.y = maxY;
-    //     }
-    //
-    //     // // Shooting
-    //     // if (this.cursors.space.isDown && this.canShoot) {
-    //     //     this.shootLaser();
-    //     // }
-    // }
 
+    shootLaser() {
+        const x = this.x + this.width / 2;
+        const y = this.y;
 
+        const laser = this.laserGroup.getFirstDead(false);
+
+        if (laser) {
+            // Shoot Laser if ready
+            laser.fire(x, y);
+        }
+    // End of shootLaser function
+    }
+
+//     End of RocketMan class
 }

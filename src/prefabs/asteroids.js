@@ -1,10 +1,11 @@
 class Asteroids extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, velocity) {
+    constructor(scene, velocity, texture) {
         // call Phaser Physics Sprite constructor
         super(scene, game.config.width + rocketManWidth, Phaser.Math.Between(rocketManHeight/2,
-            game.config.height - rocketManHeight/2), 'asteroid');
+            game.config.height - rocketManHeight/2));
 
         this.parentScene = scene;               // maintain scene context
+        this.setTexture(texture);
 
         // set up physics sprite
         this.parentScene.add.existing(this);    // add to existing scene, displayList, updateList

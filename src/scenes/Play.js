@@ -40,6 +40,15 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
+        this.alienGroup = this.add.group({
+            runChildUpdate: true
+        })
+
+        for (let i = 0; i <= 5; i++) {
+            this.addAliens();
+            // const aliens = new Aliens(this, game.config.width - this.rocketMan.x, Phaser.Math.Between(0, 25), 'alien1');
+        }
+
         // wait a few seconds before spawning barriers
         // Taken from professor's paddle example
         this.time.delayedCall(2500, () => {
@@ -69,11 +78,25 @@ class Play extends Phaser.Scene {
         this.asteroidGroup.add(asteroids);
     }
 
-    addLasers() {
-        const laserY = this.rocketMan.y;
-        const laserX = this.rocketMan.x + 10;
-        const laser = new Laser(this, laserX, laserY, 'laser');
-        // this.laserGroup.add(laser);
+    addAliens() {
+        let speedVariance = Phaser.Math.Between(0, 25);
+        let aliens = new Aliens(this, game.config.width - this.rocketMan.x, speedVariance, 'alien1');
+        this.alienGroup.add(aliens);
+    }
+
+    // addLasers() {
+    //     const laserY = this.rocketMan.y;
+    //     const laserX = this.rocketMan.x + 10;
+    //     const laser = new Laser(this, laserX, laserY, 'laser');
+    //     // this.laserGroup.add(laser);
+    // }
+
+    handleCollision(rocketMan, alien) {
+        alien.destroy();
+        this.rocketMan.destroyed = true;
+
+        this.sound.play('explosion');
+
     }
 
     update() {
@@ -81,6 +104,12 @@ class Play extends Phaser.Scene {
         // creating the scrolling effect for endless runner feeling
         this.starfield.tilePositionX -= 2;
         const rocketVelocity = 100;
+
+        this.alienGroup.getChildren().forEach((aliens) => {
+            aliens.update
+        })
+
+        this.physics.world.collide(this.rocketMan, this.alienGroup, this.handleCollision, null, this);
 
         // Check if "P" key is pressed
         if (Phaser.Input.Keyboard.JustDown(this.pasueKey)) {
