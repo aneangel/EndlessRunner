@@ -17,36 +17,68 @@ class Play extends Phaser.Scene {
         this.pasueKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
 
-        // this.rocketMan = this.physics.add.sprite(32, centerY, 'rocketMan').setOrigin(0.5);
+        // this.rocketMan = this.physics.add.sprite(32, centerY, 'rocketMan').setOrigin(0.5)
 
-        this.rocketMan = new RocketMan(this, 32, centerY, 'rocketMan');
+        // LaserGroup to handle the laser class that adds function
+        const laserGroup= this.physics.add.group({
+            classType: Laser,
+            runChildUpdate: true
+        });
+
+        // Creating the rocketMan sprite and creating world collision;
+        // scale by 2.5 due to asset being smaller than I expected
+        this.rocketMan = new RocketMan(this, 32, centerY, 'rocketMan', laserGroup);
         this.rocketMan.setCollideWorldBounds(true);
         this.rocketMan.setScale(2.5);
 
+        // boolean used to monitored if rocketMan was hit by the aliens
         this.rocketMan.destroyed = false;
 
 
         // set up barrier group
         this.asteroidGroup = this.add.group({
-            runChildUpdate: true    // make sure update runs on group children
+            runChildUpdate: true
         });
+
         // wait a few seconds before spawning barriers
+        // Taken from professor's paddle example
         this.time.delayedCall(2500, () => {
             this.addAsteroids();
         });
 
+        this.physics.add.collider(this.asteroidGroup, this.rocketMan, this.asteroidCollision, null, this);
+
+        // calling onto laser's function
+        // this.addLasers();
+
+        // creating cursors to add movement to rocketMan
         cursors = this.input.keyboard.createCursorKeys();
     }
 
-    // create new barriers and add them to existing barrier group
+    asteroidCollision(asteroid, rocketMan) {
+        asteroid.destroy();
+        rocketMan.destroyed = true
+    }
+
+    // create asteroids and add them to existing asteroid group
+    // create lasers and add them to laser group
+    // method for implementation taken from professor's paddle exmaple
     addAsteroids() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance);
+        let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance, 'asteroids');
         this.asteroidGroup.add(asteroids);
+    }
+
+    addLasers() {
+        const laserY = this.rocketMan.y;
+        const laserX = this.rocketMan.x + 10;
+        const laser = new Laser(this, laserX, laserY, 'laser');
+        // this.laserGroup.add(laser);
     }
 
     update() {
 
+        // creating the scrolling effect for endless runner feeling
         this.starfield.tilePositionX -= 2;
         const rocketVelocity = 100;
 
@@ -69,6 +101,25 @@ class Play extends Phaser.Scene {
             } else {
                 this.rocketMan.setVelocityY(0);
             }
+        }
+
+        // Check if rocketMan (player) pressed 'SPACE' to shoot lasers towards aliens
+        if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))) {
+            console.log("spacebar")
+            this.rocketMan.shootLaser();
+        }
+
+        if (this.rocketMan.destroyed === true) {
+            // Add a delay before transitioning to the GameOverScene (in milliseconds)
+            const transitionDelay = 2000; // 2 seconds as an example
+
+            // Use a fade transition to the GameOverScene
+            this.cameras.main.fade(transitionDelay, 0, 0, 0, false, function (camera, progress) {
+                if (progress === 1) {
+                    // Transition is complete, start the GameOverScene
+                    this.scene.start('GameOverScene');
+                }
+            });
         }
 
 

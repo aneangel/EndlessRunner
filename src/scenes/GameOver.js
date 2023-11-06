@@ -4,6 +4,9 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
+
+        this.restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
         // Display the game over message and score
         const gameOverText = this.add.text(game.config.width / 2, game.config.height / 2, 'Game Over', {
             fontSize: '48px',
@@ -18,6 +21,10 @@ class GameOver extends Phaser.Scene {
         });
         creditsText.setOrigin(0.5);
 
+        const restartText = this.add.text(game.config.width / 2, game.config.height / 2 + 100,
+            "Press 'R' to restart the game back to menu", { fontSize: '24px', fill: '#fff' });
+        restartText.setOrigin(0.5);
+
         const highScoreText = this.add.text(game.config.width / 2, game.config.height - 100,
             'High Score: ' + highScore, {
             fontSize: '24px',
@@ -31,5 +38,16 @@ class GameOver extends Phaser.Scene {
                 this.scene.start("CreditsScene");
             }
         });
+    }
+
+    update() {
+        if (Phaser.Input.Keyboard.JustDown(this.restartKey)) {
+            console.log("Restart key pressed");
+
+            this.sound.stopAll();
+
+            this.scene.stop("playScene");
+            this.scene.start("menuScene");
+        }
     }
 }

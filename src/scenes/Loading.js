@@ -56,7 +56,7 @@ class Loading extends Phaser.Scene {
 
         // Audio needed for game
         this.load.audio('background-music', 'sounds/background.mp3')
-        // this.load.audio('tvon', 'sounds/turnon.mp3')
+
 
     }
 
