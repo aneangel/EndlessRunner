@@ -8,6 +8,14 @@ class Play extends Phaser.Scene {
         this.asteroidSpeedMax = -1000;
         level = 0;
 
+        // this.anims.create({
+        //     key: 'explode',
+        //     frames: this.anims.generateFrameNumbers('explosion', {
+        //         start: 0, end: 9, first: 0
+        //     }),
+        //     frameRate: 30
+        // });
+
 
         // Background for game
         this.starfield = this.add.tileSprite(0, 0, 1280, 960, 'background').setOrigin(0, 0);
@@ -66,7 +74,9 @@ class Play extends Phaser.Scene {
 
     asteroidCollision(asteroid, rocketMan) {
         asteroid.destroy();
-        rocketMan.destroyed = true
+        this.particle(this.rocketMan);
+        rocketMan.destroyed = true;
+
     }
 
     // create asteroids and add them to existing asteroid group
@@ -152,6 +162,23 @@ class Play extends Phaser.Scene {
         }
 
 
+    }
+
+    particle(rocketMan) {
+        // Generate a random number between 1 and 4 to select the particle asset
+        const particleKeys = ['particle', 'particle2', 'particle4'];
+        const randomParticleKey = Phaser.Math.RND.pick(particleKeys)
+        console.log(randomParticleKey)
+
+        this.add.particles(rocketMan.x, rocketMan.y, randomParticleKey, {
+            speed: 200,
+            lifespan: 150,
+            quantity: 3,
+            duration: 300,
+            maxParticles: 5
+        })
+
+        this.sound.play('shipExplosion');
     }
 
 
