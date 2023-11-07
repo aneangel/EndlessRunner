@@ -7,7 +7,41 @@ class Play extends Phaser.Scene {
         this.startTime = this.time.now;
 
         this.asteroidSpeed = -450;
-        // this.asteroidSpeedMax = -1000;
+
+        const speedUpInterval = 30000; // 30 seconds in milliseconds
+        let spawnRateMult = 1;
+        let speedInc = 0;
+        let asteroidSpeed = -450; // Initial speed
+
+        function increaseSpeed() {
+            const randomSpeedIncrease = Phaser.Math.Between(249, 601);
+            asteroidSpeed -= randomSpeedIncrease; // Increase speed by a certain amount
+            console.log(`Asteroid speed increased to ${asteroidSpeed}`);
+
+            if (asteroidSpeed <= -700 && spawnRateMult === 1) {
+                // Double the spawn rate when asteroidSpeed is -700 or lower
+                spawnRateMult = 2;
+                console.log('Asteroid spawn rate doubled!');
+            }
+
+            // Check if asteroidSpeed is a multiple of 250
+            if (asteroidSpeed % 250 === 0) {
+                speedInc++;
+                console.log(`Asteroid speed increased ${speedInc} times.`);
+
+                // Increase the spawn rate by a random number
+                const randomSpawnRateIncrease = Phaser.Math.Between(1, 3);
+                spawnRateMult += randomSpawnRateIncrease;
+                console.log(`Asteroid spawn rate increased by ${randomSpawnRateIncrease}.`);
+            }
+        }
+
+        this.time.addEvent({
+            delay: speedUpInterval,
+            callback: increaseSpeed,
+            callbackScope: this,
+            loop: true, // This makes the timer repeat
+        });
 
         // this.timerText = this.add.text(game.config.width / 2, game.config.height / 2, 'Time 0', {
         //     fontSize: game.config.width * 0.2, fill: 'rgba(255, 255, 255, 0.7)'
@@ -53,7 +87,8 @@ class Play extends Phaser.Scene {
 
         // wait a few seconds before spawning barriers
         // Taken from professor's paddle example
-        this.time.delayedCall(2500, () => {
+        const spawnDelay = 2500 / spawnRateMult;
+        this.time.delayedCall(spawnDelay, () => {
             this.addAsteroids();
         });
 
@@ -77,7 +112,7 @@ class Play extends Phaser.Scene {
     // create lasers and add them to laser group
     // method for implementation taken from professor's paddle exmaple
     addAsteroids() {
-        let speedVariance =  Phaser.Math.Between(0, 50);
+        let speedVariance =  Phaser.Math.Between(0, 500);
         let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance, 'asteroids');
         this.asteroidGroup.add(asteroids);
         asteroids.play('asteroidAnimation')
