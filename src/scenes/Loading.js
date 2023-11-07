@@ -64,6 +64,10 @@ class Loading extends Phaser.Scene {
         // Audio needed for game
         this.load.audio('background-music', 'sounds/background.mp3')
         this.load.audio('shipExplosion', 'sounds/explosion.wav')
+        this.load.audio('gameOver', 'sounds/game-over.wav')
+        this.load.audio('pause', 'sounds/pause.wav')
+        this.load.audio('button', 'sounds/confirmTone.wav')
+        this.load.audio('creditSound', 'sounds/credits.wav')
 
 
     }

@@ -37,6 +37,7 @@ class Pause extends Phaser.Scene {
         // Check if the "Escape" key is pressed to resume the game from pauseScene
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) {
             console.log("Resume/Pause key pressed");
+
             this.scene.resume("playScene");
             this.scene.stop("pauseScene");
         }
@@ -47,6 +48,7 @@ class Pause extends Phaser.Scene {
             this.sound.stopAll();
 
             this.scene.stop("playScene");
+            this.sound.play('button')
             this.scene.start("menuScene");
         }
 
@@ -56,6 +58,7 @@ class Pause extends Phaser.Scene {
             this.sound.stopAll();
 
             this.scene.stop("playScene");
+            this.sound.play('button')
             this.scene.start("GameOverScene");
         }
     }

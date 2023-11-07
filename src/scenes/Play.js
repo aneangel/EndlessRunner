@@ -86,6 +86,7 @@ class Play extends Phaser.Scene {
         let speedVariance =  Phaser.Math.Between(0, 50);
         let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance, 'asteroids');
         this.asteroidGroup.add(asteroids);
+        asteroids.play('asteroidAnimation')
     }
 
     addAliens() {
@@ -124,6 +125,7 @@ class Play extends Phaser.Scene {
         // Check if "P" key is pressed
         if (Phaser.Input.Keyboard.JustDown(this.pasueKey)) {
             console.log("Pause/Resume key pressed");
+            this.sound.play('pause');
             this.scene.launch("pauseScene");
             this.scene.pause();
         }
@@ -156,7 +158,10 @@ class Play extends Phaser.Scene {
             this.cameras.main.fade(transitionDelay, 0, 0, 0, false, function (camera, progress) {
                 if (progress === 1) {
                     // Transition is complete, start the GameOverScene
+                    this.sound.play('gameOver')
+                    this.sound.get('background-music').stop();
                     this.scene.start('GameOverScene');
+
                 }
             });
         }

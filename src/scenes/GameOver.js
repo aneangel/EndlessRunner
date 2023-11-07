@@ -35,18 +35,21 @@ class GameOver extends Phaser.Scene {
         // Listen for a key press to start the credits scene
         this.input.keyboard.on('keydown', (event) => {
             if (event.key === 'Enter') {  // You can use any key you prefer
+                this.sound.play('creditSound')
                 this.scene.start("CreditsScene");
             }
         });
     }
 
     update() {
+
         if (Phaser.Input.Keyboard.JustDown(this.restartKey)) {
             console.log("Restart key pressed");
 
-            this.sound.stopAll();
+            this.sound.get('background-music').stop();
 
             this.scene.stop("playScene");
+            this.sound.play('button')
             this.scene.start("menuScene");
         }
     }

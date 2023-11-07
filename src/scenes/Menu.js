@@ -44,7 +44,7 @@ class Menu extends Phaser.Scene {
     update() {
 
         if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
-            // this.sound.play('background-music')
+            this.sound.play('background-music')
             this.scene.start('playScene')
         }
     }

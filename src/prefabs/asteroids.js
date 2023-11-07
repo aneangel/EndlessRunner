@@ -14,6 +14,16 @@ class Asteroids extends Phaser.Physics.Arcade.Sprite {
         this.setImmovable();
         this.tint = Math.random() * 0xFFFFFF;   // randomize tint
         this.newBarrier = true;                 // custom property to control barrier spawning
+
+        this.anims.create({
+            key: 'asteroidAnimation',
+            frames: this.anims.generateFrameNumbers('animation', {
+                start: 0,
+                end: 3
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
     }
 
 
