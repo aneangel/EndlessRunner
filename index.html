@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--index.html file to run rocket patrol on web-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./src/css/indexStyle.css">
+        <title>Rocket Runner</title>
+
+        <!-- Script code block for necessary code to run the game-->
+        <script src="./lib/phaser.js"></script>
+        <script src="./src/prefabs/asteroids.js"></script>
+        <script src="./src/prefabs/laser.js"></script>
+        <script src="./src/prefabs/rocketMan.js"></script>
+        <script src="./src/prefabs/alienShip.js"></script>
+        <script src="./src/scenes/Loading.js"></script>
+        <script src="./src/scenes/Menu.js"></script>
+        <script src="./src/scenes/Play.js"></script>
+        <script src="./src/scenes/GameOver.js"></script>
+        <script src="./src/scenes/Credits.js"></script>
+        <script src="./src/scenes/Pause.js"></script>
+        <script src="./src/main.js"></script>
+
+        <style>
+            body{
+                background-color: beige;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="center" id="game-screen"></div>
+    </body>
+
+</html>
