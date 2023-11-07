@@ -4,8 +4,15 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.startTime = this.time.now;
+
         this.asteroidSpeed = -450;
-        this.asteroidSpeedMax = -1000;
+        // this.asteroidSpeedMax = -1000;
+
+        // this.timerText = this.add.text(game.config.width / 2, game.config.height / 2, 'Time 0', {
+        //     fontSize: game.config.width * 0.2, fill: 'rgba(255, 255, 255, 0.7)'
+        // });
+
         level = 0;
 
         // Background for game
@@ -129,6 +136,20 @@ class Play extends Phaser.Scene {
             } else {
                 this.rocketMan.setVelocityY(0);
             }
+        }
+
+        if (this.rocketMan.destroyed) {
+            // Calculate the duration
+            const duration = this.time.now - this.startTime;
+
+            // Convert duration to seconds
+            const durationInSeconds = Math.floor(duration / 1000);
+            if (durationInSeconds > highScore) {
+                // Update the high score to the new record
+                highScore = durationInSeconds;
+            }
+
+
         }
 
         // Check if rocketMan (player) pressed 'SPACE' to shoot lasers towards aliens

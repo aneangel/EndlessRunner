@@ -26,7 +26,7 @@ class GameOver extends Phaser.Scene {
         restartText.setOrigin(0.5);
 
         const highScoreText = this.add.text(game.config.width / 2, game.config.height - 100,
-            'High Score: ' + highScore, {
+            'High Score: ' + highScore + ' Seconds', {
             fontSize: '24px',
             fill: '#fff'
         });
