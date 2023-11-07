@@ -30,7 +30,7 @@ class Play extends Phaser.Scene {
                 console.log(`Asteroid speed increased ${speedInc} times.`);
 
                 // Increase the spawn rate by a random number
-                const randomSpawnRateIncrease = Phaser.Math.Between(1, 3);
+                const randomSpawnRateIncrease = Phaser.Math.Between(1, 2);
                 spawnRateMult += randomSpawnRateIncrease;
                 console.log(`Asteroid spawn rate increased by ${randomSpawnRateIncrease}.`);
             }
@@ -65,6 +65,18 @@ class Play extends Phaser.Scene {
         // Creating the rocketMan sprite and creating world collision;
         // scale by 2.5 due to asset being smaller than I expected
         this.rocketMan = new RocketMan(this, 32, centerY, 'rocketMan', laserGroup);
+
+        // Set the desired dimensions for the hitbox
+        this.rocketMan.setOrigin(0.5, 0.5);
+        const newWidth = 20; // Set your desired width
+        const newHeight = 10; // Set your desired height
+
+        // Resize the hitbox
+        this.rocketMan.setSize(newWidth, newHeight);
+
+        // Enable the physics for the sprite if it's not enabled
+        // this.physics.world.enable(sprite);
+
         this.rocketMan.setCollideWorldBounds(true);
         this.rocketMan.setScale(2.5);
 
@@ -81,20 +93,25 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         })
 
-        for (let i = 0; i <= 5; i++) {
-            this.addAliens();
-        }
-
-        // wait a few seconds before spawning barriers
+        // wait a few seconds before spawning asteroids
         // Taken from professor's paddle example
         const spawnDelay = 2500 / spawnRateMult;
         this.time.delayedCall(spawnDelay, () => {
             this.addAsteroids();
         });
 
+        // Delayed call for spawning aliens every 10 seconds
+        this.time.addEvent({
+            delay: 10000, // 10 seconds in milliseconds
+            loop: true, // Repeat indefinitely
+            callback: () => {
+                this.addAliens();
+            }
+        });
+
         this.physics.add.collider(this.asteroidGroup, this.rocketMan, this.asteroidCollision, null, this);
 
-        // calling onto laser's function
+        // // calling onto laser's function
         // this.addLasers();
 
         // creating cursors to add movement to rocketMan
@@ -112,24 +129,29 @@ class Play extends Phaser.Scene {
     // create lasers and add them to laser group
     // method for implementation taken from professor's paddle example
     addAsteroids() {
-        let speedVariance =  Phaser.Math.Between(0, 500);
+        let speedVariance =  Phaser.Math.Between(5, 500);
         let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance, 'asteroids');
         this.asteroidGroup.add(asteroids);
         asteroids.play('asteroidAnimation')
     }
 
     addAliens() {
-        let speedVariance = Phaser.Math.Between(0, 25);
-        let aliens = new Aliens(this, game.config.width - this.rocketMan.x, speedVariance, 'alien1');
+        const rocketManY = this.rocketMan.y;
+        const screenHeight = game.config.height;
+
+        // Calculate the y position for the aliens to be directly opposite the rocketMan
+        const alienY = screenHeight - rocketManY;
+
+        let aliens = new Aliens(this, game.config.width - this.rocketMan.x, alienY, -450, 'alien1');
         this.alienGroup.add(aliens);
     }
 
-    // addLasers() {
-    //     const laserY = this.rocketMan.y;
-    //     const laserX = this.rocketMan.x + 10;
-    //     const laser = new Laser(this, laserX, laserY, 'laser');
-    //     // this.laserGroup.add(laser);
-    // }
+    addLasers() {
+        const laserY = this.rocketMan.y;
+        const laserX = this.rocketMan.x + 10;
+        const laser = new Laser(this, laserX, laserY, 'laser');
+        // this.laserGroup.add(laser);
+    }
 
     handleCollision(rocketMan, alien) {
         alien.destroy();
@@ -171,7 +193,35 @@ class Play extends Phaser.Scene {
             } else {
                 this.rocketMan.setVelocityY(0);
             }
+
+            // Handle left and right movement
+            if (cursors.left.isDown) {
+                // Move left when the left arrow key is pressed
+                console.log('left key')
+                this.rocketMan.body.velocity.x -= rocketVelocity;
+            } else if (cursors.right.isDown) {
+                console.log('right key')
+                // Move right when the right arrow key is pressed
+                this.rocketMan.body.velocity.x += rocketVelocity;
+            } else {
+                this.rocketMan.setVelocityX(0);
+            }
+
+            // Handle user input for movement
+            const moveX = (cursors.right.isDown ? 1 : 0) - (cursors.left.isDown ? 1 : 0);
+            const moveY = (cursors.down.isDown ? 1 : 0) - (cursors.up.isDown ? 1 : 0);
+
+            // Normalize the diagonal speed
+            if (moveX !== 0 && moveY !== 0) {
+                const speed = Math.sqrt(2) * rocketVelocity; // Maximum diagonal speed
+                this.rocketMan.body.velocity.x = moveX * speed;
+                this.rocketMan.body.velocity.y = moveY * speed;
+            } else {
+                this.rocketMan.body.velocity.x = moveX * rocketVelocity;
+                this.rocketMan.body.velocity.y = moveY * rocketVelocity;
+            }
         }
+
 
         if (this.rocketMan.destroyed) {
             // Calculate the duration

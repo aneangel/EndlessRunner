@@ -22,11 +22,11 @@ let config = {
     scale: {
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    debug: true,
+
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true,
+            debug: true,
             gravity: {
                 x: 0,
                 y: 0

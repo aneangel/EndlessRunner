@@ -1,10 +1,8 @@
 class Aliens extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene,x, velocity, texture) {
-
-        const alienY = scene.rocketMan.centerY;
+    constructor(scene, x, y, velocity, texture) {
 
         // call Phaser Physics Sprite constructor
-        super(scene, game.config.width + rocketManWidth, alienY);
+        super(scene, game.config.width + rocketManWidth, y);
         this.setTexture(texture);
 
         this.parentScene = scene;               // maintain scene context
