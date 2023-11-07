@@ -8,6 +8,7 @@ class RocketMan extends Phaser.Physics.Arcade.Sprite {
         this.setOrigin(0.5, 0.5);
         this.setCollideWorldBounds(true);
         this.setBounce(0.5);
+        this.isFiring = false;
 
         // Define custom properties for RocketMan, e.g., speed
         this.speed = 200;
@@ -18,9 +19,8 @@ class RocketMan extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-
     shootLaser() {
-        const x = this.x + this.width / 2;
+        const x = this.x + this.width;
         const y = this.y;
 
         const laser = this.laserGroup.getFirstDead(false);

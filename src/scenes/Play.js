@@ -143,6 +143,15 @@ class Play extends Phaser.Scene {
         const alienY = screenHeight - rocketManY;
 
         let aliens = new Aliens(this, game.config.width - this.rocketMan.x, alienY, -450, 'alien1');
+        aliens.setScale(4);
+
+        aliens.setOrigin(0.5, 0.5);
+        const newWidth = 10; // Set your desired width
+        const newHeight = 10; // Set your desired height
+
+        // Resize the hitbox
+        aliens.setSize(newWidth, newHeight);
+
         this.alienGroup.add(aliens);
     }
 
@@ -150,7 +159,7 @@ class Play extends Phaser.Scene {
         const laserY = this.rocketMan.y;
         const laserX = this.rocketMan.x + 10;
         const laser = new Laser(this, laserX, laserY, 'laser');
-        // this.laserGroup.add(laser);
+        this.laserGroup.add(laser);
     }
 
     handleCollision(rocketMan, alien) {

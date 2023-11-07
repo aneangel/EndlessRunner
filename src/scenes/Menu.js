@@ -30,6 +30,8 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 80,
             'Use Arrow Keys to dodge asteroids\n' +
             ' Use Spacebar to shoot Aliens\n' +
+            "Press 'P' key to pause\n" +
+            ""  +
             ' See who can get the longest time alive 0.o', menuConfig).setOrigin(0.5)
 
     //     Define Keys LEFT and RIGHT
