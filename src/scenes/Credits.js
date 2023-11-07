@@ -10,10 +10,12 @@ class Credits extends Phaser.Scene {
 
         // Create credits text with scrolling effect
         const creditsText = this.add.text(game.config.width / 2, game.config.height, 'Developer: Anthony Angeles\n' +
-            'Music: homeless man\n' +
-            'Sprite Design: Anthony Angeles', {
+            'Music: https://mixkit.co/free-sound-effects/\n' +
+            'Sprite Design: Anthony Angeles\n ' +
+            'Inspiration for implementation on sprite mechanics taken from in class examples\n provided by Professor Nathan', {
             fontSize: '24px',
-            fill: '#fff'
+            fill: '#fff',
+            align: 'center'
         });
         creditsText.setOrigin(0.5, 1);
 
