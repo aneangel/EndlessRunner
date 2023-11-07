@@ -29,7 +29,7 @@ class Menu extends Phaser.Scene {
         menuConfig.fontSize = '28px';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 80,
             'Use Arrow Keys to dodge asteroids\n' +
-            ' Use Spacebar to shoot Aliens\n' +
+            // ' Use Spacebar to shoot Aliens\n' +
             "Press 'P' key to pause\n" +
             ""  +
             ' See who can get the longest time alive 0.o', menuConfig).setOrigin(0.5)
