@@ -8,24 +8,12 @@ class Play extends Phaser.Scene {
         this.asteroidSpeedMax = -1000;
         level = 0;
 
-        // this.anims.create({
-        //     key: 'explode',
-        //     frames: this.anims.generateFrameNumbers('explosion', {
-        //         start: 0, end: 9, first: 0
-        //     }),
-        //     frameRate: 30
-        // });
-
-
         // Background for game
         this.starfield = this.add.tileSprite(0, 0, 1280, 960, 'background').setOrigin(0, 0);
         this.physics.world.setBounds(0 ,0, game.config.width, game.config.height);
 
         // Creating key "P" for pausing the game at anytime
         this.pasueKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-
-
-        // this.rocketMan = this.physics.add.sprite(32, centerY, 'rocketMan').setOrigin(0.5)
 
         // LaserGroup to handle the laser class that adds function
         const laserGroup= this.physics.add.group({
@@ -42,19 +30,18 @@ class Play extends Phaser.Scene {
         // boolean used to monitored if rocketMan was hit by the aliens
         this.rocketMan.destroyed = false;
 
-
-        // set up barrier group
+        // set up asteroid group
         this.asteroidGroup = this.add.group({
             runChildUpdate: true
         });
 
+        // set up laser group
         this.alienGroup = this.add.group({
             runChildUpdate: true
         })
 
         for (let i = 0; i <= 5; i++) {
             this.addAliens();
-            // const aliens = new Aliens(this, game.config.width - this.rocketMan.x, Phaser.Math.Between(0, 25), 'alien1');
         }
 
         // wait a few seconds before spawning barriers
