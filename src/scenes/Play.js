@@ -110,7 +110,7 @@ class Play extends Phaser.Scene {
 
     // create asteroids and add them to existing asteroid group
     // create lasers and add them to laser group
-    // method for implementation taken from professor's paddle exmaple
+    // method for implementation taken from professor's paddle example
     addAsteroids() {
         let speedVariance =  Phaser.Math.Between(0, 500);
         let asteroids = new Asteroids(this, this.asteroidSpeed - speedVariance, 'asteroids');
